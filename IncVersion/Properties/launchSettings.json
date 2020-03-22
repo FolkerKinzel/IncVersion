@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "IncVersion": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\fkinz\\source\\repos\\IncVersion\\IncVersion\\IncVersion.csproj"
+    }
+  }
+}
