@@ -18,7 +18,8 @@ important or breaking change to your application or not. Different version numbe
 
 #### 2. Download the zip-File with IncVersion and unzip it to the solution directory of your project
 The solution directory now should look like this:
-<ul style = "list-style-type: none">
+
+<ul type="none">
 <li>&lt; YourSolutionDirectory</>
 <li>
    <ul type="none">
