@@ -49,7 +49,7 @@ namespace IncVersion
         {
             Console.WriteLine();
 
-            Console.WriteLine($"Usage: {Assembly.GetExecutingAssembly().GetName().Name} Path_to_the_csproj_file");
+            Console.WriteLine($"Usage: dotnet {Assembly.GetExecutingAssembly().GetName().Name}.dll Path_to_the_csproj_file");
             Console.WriteLine("======");
 
             //Console.ReadLine();
