@@ -29,7 +29,6 @@ The solution directory now should look like this:
              <li>&#9633; IncVersion.dll</li>
              <li>&#9633; IncVersion.runtimeconfig.json</li>
              <li>&#9633; README.md</li>
-             
          </ul>
       </li>
       <li>&lt; YourProjectDirectory</li>
