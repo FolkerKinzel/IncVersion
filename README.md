@@ -1,36 +1,40 @@
 # IncVersion
 
-Increments the Build-Part of the current `<FileVersion>`-property in the Visual Studio Project File automatically. 
-It can be used in Visual Studio 2019 projects with Sdk-style project files.
+Increments the Build part of the current `<FileVersion>` property in the Visual Studio Project File automatically. 
+It can be used in Visual Studio 2019 projects on Sdk-style project files.
+
+[Download IncVersion](https://github.com/FolkerKinzel/IncVersion/binaries/IncVersion.zip)
 
 
 
 ## How it works
 
-After every build of your project, IncVersion increments the build part of the current `<FileVersion>`-Property in your .csproj-file. If you didn't had 
-a `<FileVersion>`-Property before the build, IncVersion will add `<FileVersion>1.0.0.0</FileVersion>` to the project file.
+After every build of your project, IncVersion increments the build part of the current `<FileVersion>` property in your .csproj-file. If it didn't have
+a `<FileVersion>`-Property before the build, IncVersion will add `<FileVersion>1.0.0.0</FileVersion>`.
 
 You might wonder, why IncVersion does not change the csproj-File *before* Visual Studio compiles the output? Unfortunately, it is impossible, 
 because Visual Studio reads the `<FileVersion>` from the project file before it executes any Build Events. In order to clarify this behavior, 
-I decided for myself to prefer the Postbuild Event rather than the Prebuild Event.
+I decided for myself to prefer the Post Build Event rather than the Pre Build Event.
 
 Why doesn't IncVersion increment the Assembly Version or the Nuget Package Version? That's why only yourself knows, if the current build is an 
 important or breaking change to your application or not. Different version numbers describe different aspects and they don't need to be identical.
 
 
 
-## Setup IncVersion
+## Set up IncVersion
 
-#### 1. Make sure to have the .NetCore-3.1-Runtime installed on your computer
+#### 1. Make sure to have the .NetCore 3.1 runtime installed on your computer
 
-IncVersion is a very small platform independent .NetCore-3.1-dll with no runtime components included. That's a design choice, because - following my
+IncVersion is a very small platform-independent .NetCore-3.1-dll with no runtime components included. That's a design choice, because - following my
 approach - IncVersion is copied to every project directory. Therefore it's necessary to have the runtime installed global.
 
 
 
 #### 2. Download the zip-File with IncVersion and unzip it to the solution directory of your project
 
-The solution directory now should look like this:
+Download IncVersion [here](https://github.com/FolkerKinzel/IncVersion/binaries/IncVersion.zip).
+
+Unzip it to the directory, where the solution file (*.sln) of your project is. The solution directory now should look like this:
 
 <ul type="none">
 <li>&lt; YourSolutionDirectory</>
@@ -42,7 +46,7 @@ The solution directory now should look like this:
           <ul type="none">
              <li>&#9633; IncVersion.dll</li>
              <li>&#9633; IncVersion.runtimeconfig.json</li>
-             <li>&#9633; README.md</li>
+             <li>&#9633; README.txt</li>
          </ul>
       </li>
       <li>&lt; YourProjectDirectory</li>
@@ -55,38 +59,45 @@ The solution directory now should look like this:
 </li>
 </ul>
 
-#### 3. Give your project a Postbuild Event to invoke IncVersion
-To invoke IncVersion you have to add a Postbuild-Event to every project that you want IncVersion to increment the `FileVersion` property. Choose only
-projects, that are physically located in the same project directory where you unzipped IncVersion in the previous step.
+#### 3. Give your project a Post Build Event to invoke IncVersion
+To invoke IncVersion, you have to add a Post Build Event to every project that you want IncVersion to increment the `FileVersion` property. Choose only
+projects, that are physically located in the same project directory, where you unzipped IncVersion in the previous step.
 
-To add a Postbuild-Event, right-click the project in Visual Studio Solution Explorer and choose "Properties". In the Project-Properties select "Build-Events".
+To add a Post Build Event, right-click the project in Visual Studio Solution Explorer and select "Properties". In the project properties window select "Build Events".
 
 
-Paste the following code to the textbox "Postbuild-Event":
+Paste the following code to the textbox "Post Build Event":
 > if $(ConfigurationName) == Release if '$(TargetFramework)' == 'netcoreapp3.1' dotnet $(SolutionDir)IncVersion\IncVersion.dll $(ProjectDir)$(ProjectFileName)
 
-This Postbuild-Event MUST NOT contain any line-breaks!
+This Post Build Event **MUST NOT** contain any line-breaks!
 
-If you have an earlier postbuild event, make a line-break at the end of the earlier postbuild event and paste the code to the new line.
+If you have an earlier Post Build Event, make a line-break at the end of the earlier Post Build Event and paste the code to the new line.
 
 **Replace `netcoreapp3.1` with one of your build targets**, if NetCore 3.1 is not among them. To find the correct naming of your build target, 
-open your project file in the text-editor: Your build target is the content of the property `TargetFramework`. If it's a multitargeting project,
+open your project file in the text editor: Your build target is the content of the property `TargetFramework`. If it's a multitargeting project,
 the build targets are under `TargetFrameworks`: Choose one!
 
 *The post build event explained:*
-* _`if $(ConfigurationName) == Release` makes, that IncVersion is only invoked, when you build the Release-Configuration. You can remove this, if you
-               - in addition - like to count also the Debug-builds._
-* _`if '$(TargetFramework)' == 'netcoreapp3.1'` makes, that IncVersion is called only ones per build - even if you have more than one build target.
+* _`if $(ConfigurationName) == Release` causes IncVersion to be invoked only if you build the Release-Configuration. You may remove this, if you like
+               - in addition - also to count the debug builds._
+* _`if '$(TargetFramework)' == 'netcoreapp3.1'` causes IncVersion to be called only ones per build - even if you have more than one build target.
   If you have only one build target (and plan never to have a second), you can remove this._
 
 
 ## FAQ
 
+#### Can I assign the file version independently when using IncVersion?
+
+Of course, you can: Because of that IncVersion changes the project file after the build, the current build takes the file version number, that you
+have entered in the project file immediately before the build.
+
+It becomes a little bit tricky, if you use the "Publish" function of Visual Studio. For a workaround, read the next question.
+
 #### How to get a FileVersion-Build-Part with value 0 when publishing a .NetCore app?
 
-If you right-click to your project in Visual Studio Solution Explorer and choose "Publish", Visual Studio calls the Build Events twice. Therefore
-you have to set a fileversion number with only two parts before you publish.
+Visual Studio calls the Build Events twice, if you right-click to your project in Visual Studio Solution Explorer and choose "Publish". Therefore
+you have to set a file version number with only two parts before you publish.
 
-For instance: Setting FileVersion to 1.3 before publishing produces Assemblies
+For instance: Setting FileVersion to 1.3 before publishing, produces assemblies
 with a FileVersionAttribute, that has the value 1.3.0.0 .
 
