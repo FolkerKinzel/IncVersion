@@ -21,11 +21,11 @@ The solution directory now should look like this:
 <ul style = "list-style-type: none">
 <li>&lt; YourSolutionDirectory</>
 <li>
-   <ul style = "list-style-type: none">
+   <ul type="none">
        <li>&#9633; YourSolution.sln</li>
        <li>&lt; IncVersion</li>
        <li>
-          <ul style = "list-style-type: none">
+          <ul type="none">
              <li>&#9633; IncVersion.dll</li>
              <li>&#9633; IncVersion.runtimeconfig.json</li>
              <li>&#9633; README.md</li>
@@ -33,7 +33,7 @@ The solution directory now should look like this:
       </li>
       <li>&lt; YourProjectDirectory</li>
       <li>
-          <ul style = "list-style-type: none">
+          <ul type="none">
              <li>&#9633; YourProject.csproj</li>
          </ul>
       </li>
