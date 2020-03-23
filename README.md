@@ -3,7 +3,7 @@
 Increments the Build part of the `<FileVersion>` property in the Visual Studio Project File automatically after every build. 
 It can be used in Visual Studio 2019 projects on Sdk-style project files.
 
-[Download IncVersion](https://github.com/FolkerKinzel/IncVersion/binaries/IncVersion.zip)
+[Download IncVersion](https://github.com/FolkerKinzel/IncVersion/tree/master/binaries)
 
 
 
@@ -32,7 +32,7 @@ approach - IncVersion is copied to every project directory. Therefore it's neces
 
 #### 2. Download the zip-File with IncVersion and unzip it to the solution directory of your project
 
-Download IncVersion [here](https://github.com/FolkerKinzel/IncVersion/binaries/IncVersion.zip).
+Download IncVersion [here](https://github.com/FolkerKinzel/IncVersion/tree/master/binaries).
 
 Unzip it to the directory, where the solution file (*.sln) of your project is. ("Right-click and select "Unzip all".) The solution directory now should look like this:
 
