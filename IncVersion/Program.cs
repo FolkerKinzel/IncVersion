@@ -38,8 +38,17 @@ namespace IncVersion
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"{Assembly.GetExecutingAssembly().GetName().Name}: ");
-            Console.WriteLine($"{INDENT}Property <FileVersionAttribute> in {incrFileVersion.CsprojFileName} successfully changed from {incrFileVersion.OldVersion} to {incrFileVersion.NewVersion}.");
-            Console.WriteLine($"{INDENT}These changes are applied to the compiled assembly at next build.");
+
+            if (incrFileVersion.OldVersion == null)
+            {
+                Console.WriteLine($"{INDENT}Property <FileVersionAttribute> with Version {incrFileVersion.NewVersion} added to {incrFileVersion.CsprojFileName}.");
+                Console.WriteLine($"{INDENT}These changes are applied to the compiled assembly at next build.");
+            }
+            else
+            {
+                Console.WriteLine($"{INDENT}Property <FileVersionAttribute> in {incrFileVersion.CsprojFileName} changed from {incrFileVersion.OldVersion} to {incrFileVersion.NewVersion}.");
+                Console.WriteLine($"{INDENT}These changes are applied to the compiled assembly at next build.");
+            }
             Console.ResetColor();
             Console.WriteLine();
             return 0;

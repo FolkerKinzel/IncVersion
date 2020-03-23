@@ -15,7 +15,7 @@ namespace IncVersion.Tests
 
         [TestMethod()]
         public void IncrementAssemblyFileVersionTest()
-        {
+        { 
             string fileName = Path.Combine(Directory.GetParent(TestContext.TestRunDirectory).FullName, "Test.csproj");
 
             var incrementer = new AssemblyFileVersionIncrementer();

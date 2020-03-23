@@ -28,9 +28,11 @@ namespace IncVersion
                 throw new ArgumentException("The first argument has to be a valid file path!", e);
             }
 
-            if(!StringComparer.OrdinalIgnoreCase.Equals(".CSPROJ", Path.GetExtension(pathToCsproj)))
+            string ext = Path.GetExtension(pathToCsproj);
+
+            if (!ext.StartsWith('.') || !ext.EndsWith("PROJ", StringComparison.OrdinalIgnoreCase))
             {
-                throw new ArgumentException($"The argument \"{pathToCsproj}\"{Environment.NewLine}is not a path to a csproj-file!");
+                throw new ArgumentException($"The argument \"{pathToCsproj}\"{Environment.NewLine}is not a path to a Visual Studio project file!");
             }
 
             if(!File.Exists(pathToCsproj))
@@ -69,7 +71,7 @@ namespace IncVersion
 
             XElement? fileVersion = propertyGroups.FirstOrDefault(x => x.Elements().Any(x => x.Name == FileVersion))?.Element(FileVersion);
 
-            if(fileVersion is null)
+            if (fileVersion is null)
             {
                 //throw new OperationFailedException(
                 //    $"There is no <FileVersion>-Property in {CsprojFileName}. Open the project file and add <FileVersion>1.0.0.0</FileVersion> to the first <PropertyGroup>.");
@@ -80,17 +82,38 @@ namespace IncVersion
                 };
 
                 propertyGroups.First().Add(fileVersion);
-            }
 
-            try
-            {
-                this.OldVersion = new Version(fileVersion.Value);
-                this.NewVersion = new Version(OldVersion.Major, OldVersion.Minor, OldVersion.Build + 1, Math.Max(0, OldVersion.Revision));
-                fileVersion.Value = NewVersion.ToString(4);
+                this.NewVersion = new Version(1,0,0,0);
             }
-            catch(Exception e)
+            else if (fileVersion.Value.Length == 0)
             {
-                throw new OperationFailedException("Can't parse <FileVersion> as System.Version.", e);
+                fileVersion.Value = "1.0.0.0";
+
+                this.NewVersion = new Version(1,0,0,0);
+                this.OldVersion = new Version();
+            }
+            else
+            {
+                try
+                {
+                    string?[] parts = fileVersion.Value.Split('-', 2, StringSplitOptions.None);
+
+                    this.OldVersion = new Version(parts[0]!);
+                    this.NewVersion = new Version(OldVersion.Major, OldVersion.Minor, OldVersion.Build + 1, Math.Max(0, OldVersion.Revision));
+
+                    if (parts.Length == 2)
+                    {
+                        fileVersion.Value = $"{NewVersion.ToString(4)}-{parts[1]}";
+                    }
+                    else
+                    {
+                        fileVersion.Value = NewVersion.ToString(4);
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw new OperationFailedException("Can't parse <FileVersion> as System.Version.", e);
+                }
             }
 
             try
