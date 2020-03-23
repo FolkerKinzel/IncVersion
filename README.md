@@ -1,6 +1,6 @@
 # IncVersion
 
-Increments the Build part of the current `<FileVersion>` property in the Visual Studio Project File automatically. 
+Increments the Build part of the `<FileVersion>` property in the Visual Studio Project File automatically after every build. 
 It can be used in Visual Studio 2019 projects on Sdk-style project files.
 
 [Download IncVersion](https://github.com/FolkerKinzel/IncVersion/binaries/IncVersion.zip)
@@ -34,7 +34,7 @@ approach - IncVersion is copied to every project directory. Therefore it's neces
 
 Download IncVersion [here](https://github.com/FolkerKinzel/IncVersion/binaries/IncVersion.zip).
 
-Unzip it to the directory, where the solution file (*.sln) of your project is. The solution directory now should look like this:
+Unzip it to the directory, where the solution file (*.sln) of your project is. ("Right-click and select "Unzip all".) The solution directory now should look like this:
 
 <ul type="none">
 <li>&lt; YourSolutionDirectory</>
