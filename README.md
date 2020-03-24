@@ -5,7 +5,7 @@ It can be used in Visual Studio 2019 projects on Sdk-style project files.
 
 [Download IncVersion](https://github.com/FolkerKinzel/IncVersion/tree/master/binaries/IncVersion.zip)
 
-
+IMPORTANT: On some systems, the content of the ZIP file is blocked. Before extracting it, right click on the ZIP file, select Properties, and click on the Unblock button - if it is present - in the lower right corner of the General tab in the Properties dialog.
 
 ## How it works
 
@@ -32,7 +32,7 @@ approach - IncVersion is copied to every project directory. Therefore it's neces
 
 #### 2. Download the zip-File with IncVersion and unzip it to the solution directory of your project
 
-Download IncVersion [here](https://github.com/FolkerKinzel/IncVersion/tree/master/binaries/IncVersion.zip).
+Download IncVersion [here](https://github.com/FolkerKinzel/IncVersion/tree/master/binaries/IncVersion.zip) and unblock it, if your computer blocks it. (See description above.)
 
 Unzip it to the directory, where the solution file (*.sln) of your project is. ("Right-click and select "Unzip all".) The solution directory now should look like this:
 
