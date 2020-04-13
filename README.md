@@ -79,7 +79,7 @@ If you have an earlier Post Build Event, make a line-break at the end of the ear
 
 **Replace `netcoreapp3.1` with one of your build targets**, if NetCore 3.1 is not among them. To find the correct naming of your build target, 
 open your project file in the text editor: Your build target is the content of the property `TargetFramework`. If it's a multitargeting project,
-the build targets are under `TargetFrameworks`: Choose one!
+the build targets belong to `TargetFrameworks`: Choose one!
 
 *The post build event explained:*
 * _`if $(ConfigurationName) == Release` causes IncVersion to be invoked only if you build the Release-Configuration. You may remove this, if you like
