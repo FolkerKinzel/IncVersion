@@ -59,6 +59,10 @@ Unzip it to the directory, where the solution file (*.sln) of your project is. (
 </li>
 </ul>
 
+**Notice:** You have to unzip IncVersion to every solution directory, where your project is referenced - 
+otherwise the Post Build Event will fail (resulting in a build error), if you try to build your project 
+from there!
+
 #### 3. Give your project a Post Build Event to invoke IncVersion
 To invoke IncVersion, you have to add a Post Build Event to every project that you want IncVersion to increment the `FileVersion` property. Choose only
 projects, that are physically located in the same project directory, where you unzipped IncVersion in the previous step.
