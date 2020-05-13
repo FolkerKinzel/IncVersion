@@ -1,4 +1,5 @@
 # IncVersion
+![version](https://img.shields.io/badge/version-1.2-blue)
 
 Increments the Build part of the `<FileVersion>` property in the Visual Studio Project File automatically after every build. 
 It can be used in Visual Studio 2019 projects on Sdk-style project files.
