@@ -28,7 +28,7 @@ important or breaking change to your application or not. Different version numbe
 #### 1. Make sure to have the .NetCore 3.1 runtime installed on your computer
 
 IncVersion is a very small platform-independent .NetCore-3.1-dll with no runtime components included. That's a design choice, because - following my
-approach - IncVersion is copied to every project directory. Therefore it's necessary to have the runtime installed global.
+approach - IncVersion is copied to every Visual Studio solution directory. Therefore it's necessary to have the runtime installed global.
 
 
 
