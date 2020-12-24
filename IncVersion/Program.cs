@@ -4,25 +4,32 @@ using System.Reflection;
 
 namespace IncVersion
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]
     class Program
     {
         private const string INDENT = "     ";
 
+        private const int ERROR_INVALID_COMMAND_LINE = 0x667;
+
         static int Main(string[] args)
         {
-            if(args.Length == 0)
-            {
-                ShowUsage();
+            CommandLineArgs cmdArgs;
 
-                return 0;
+            try
+            {
+                cmdArgs = new CommandLineArgs(args);
+            }
+            catch(ArgumentException e)
+            {
+                WriteError(e);
+                ShowUsage();
+                return ERROR_INVALID_COMMAND_LINE;
             }
 
             var incrFileVersion = new AssemblyFileVersionIncrementer();
 
             try
             {
-                incrFileVersion.IncrementAssemblyFileVersion(args[0]);
+                incrFileVersion.IncrementAssemblyFileVersion(cmdArgs);
             }
             catch(OperationFailedException e)
             {
@@ -57,8 +64,18 @@ namespace IncVersion
         private static void ShowUsage()
         {
             Console.WriteLine();
-
-            Console.WriteLine($"Usage: dotnet {Assembly.GetExecutingAssembly().GetName().Name}.dll Path_to_the_csproj_file");
+            Console.WriteLine($"{Assembly.GetExecutingAssembly().GetName().Name} increments the the <FileVersion> property in the Visual Studio Project File automatically after every build.");
+            Console.WriteLine();
+            Console.WriteLine("Usage:");
+            Console.WriteLine("To increment the Build part of the <FileVersion> property:");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"{INDENT}dotnet {Assembly.GetExecutingAssembly().GetName().Name}.dll Path_to_the_csproj_file");
+            Console.ResetColor();
+            Console.WriteLine();
+            Console.WriteLine("To increment the Revision part of the <FileVersion> property:");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"{INDENT}dotnet {Assembly.GetExecutingAssembly().GetName().Name}.dll Path_to_the_csproj_file {CommandLineArgs.REVISION_INCREMENT_ARGUMENT}");
+            Console.ResetColor();
             Console.WriteLine("======");
 
             //Console.ReadLine();

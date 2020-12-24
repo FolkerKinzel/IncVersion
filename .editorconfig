@@ -1,0 +1,64 @@
+﻿[*.cs]
+
+# CA1019: Zugriffsmethoden für Attributargumente definieren
+dotnet_diagnostic.CA1019.severity = suggestion
+
+# CA1001: Typen mit eigenen verwerfbaren Feldern müssen verwerfbar sein
+dotnet_diagnostic.CA1001.severity = error
+
+# CA1032: Standardausnahmekonstruktoren implementieren
+dotnet_diagnostic.CA1032.severity = suggestion
+
+# CA1065: Keine Ausnahmen an unerwarteten Speicherorten auslösen
+dotnet_diagnostic.CA1065.severity = suggestion
+
+# CA1200: Verwendung von cref-Tags mit einem Präfix vermeiden
+dotnet_diagnostic.CA1200.severity = suggestion
+
+# CA1309: Ordinalzeichenfolgenvergleich verwenden
+dotnet_diagnostic.CA1309.severity = suggestion
+
+# CA1812: Nicht instanziierte interne Klassen vermeiden
+dotnet_diagnostic.CA1812.severity = suggestion
+
+# CA2234: System-URI-Objekte anstelle von Zeichenfolgen übergeben
+dotnet_diagnostic.CA2234.severity = suggestion
+
+# CA3076: Unsichere XSLT-Skriptverarbeitung.
+dotnet_diagnostic.CA3076.severity = suggestion
+
+# CA3077: Unsichere Verarbeitung in API-Design, XmlDocument und XmlTextReader
+dotnet_diagnostic.CA3077.severity = suggestion
+
+# CA1012: Abstrakte Typen dürfen keine öffentlichen Konstruktoren enthalten
+dotnet_diagnostic.CA1012.severity = suggestion
+
+# CA1054: URI-ähnliche Parameter dürfen keine Zeichenfolgen sein
+dotnet_diagnostic.CA1054.severity = suggestion
+
+# CA1055: URI-ähnliche Rückgabewerte dürfen keine Zeichenfolgen sein
+dotnet_diagnostic.CA1055.severity = suggestion
+
+# CA1056: URI-ähnliche Eigenschaften dürfen keine Zeichenfolgen sein
+dotnet_diagnostic.CA1056.severity = suggestion
+
+# CA1062: Argumente von öffentlichen Methoden validieren
+dotnet_diagnostic.CA1062.severity = suggestion
+
+# CA1066: "IEquatable" beim Außerkraftsetzen von "Object.Equals" implementieren
+dotnet_diagnostic.CA1066.severity = suggestion
+
+# CA1307: "StringComparison" zur Verdeutlichung angeben
+dotnet_diagnostic.CA1307.severity = suggestion
+
+# CA1308: Zeichenfolgen in Großbuchstaben normalisieren
+dotnet_diagnostic.CA1308.severity = suggestion
+
+# CA1310: "StringComparison" für Richtigkeit angeben
+dotnet_diagnostic.CA1310.severity = suggestion
+
+# CA1724: Typnamen dürfen nicht mit Namespaces übereinstimmen
+dotnet_diagnostic.CA1724.severity = warning
+
+# CA1802: Nach Möglichkeit Literale verwenden
+dotnet_diagnostic.CA1802.severity = suggestion

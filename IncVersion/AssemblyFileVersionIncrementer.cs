@@ -7,40 +7,25 @@ using System.Xml.Linq;
 
 namespace IncVersion
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Keine allgemeinen Ausnahmetypen abfangen", Justification = "<Ausstehend>")]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]
     public class AssemblyFileVersionIncrementer
     {
         public Version? OldVersion { get; private set; }
         public Version? NewVersion { get; private set; }
         public string? CsprojFileName { get; internal set; }
 
-        public void IncrementAssemblyFileVersion(string fileName)
+        public void IncrementAssemblyFileVersion(CommandLineArgs cmdArgs)
         {
-            string pathToCsproj;
-
-            try
+            if(cmdArgs is null)
             {
-                pathToCsproj = Path.GetFullPath(fileName);
-            }
-            catch (Exception e)
-            {
-                throw new ArgumentException("The first argument has to be a valid file path!", e);
+                throw new ArgumentNullException(nameof(cmdArgs));
             }
 
-            string ext = Path.GetExtension(pathToCsproj);
-
-            if (!ext.StartsWith('.') || !ext.EndsWith("PROJ", StringComparison.OrdinalIgnoreCase))
+            if(!File.Exists(cmdArgs.FilePath))
             {
-                throw new ArgumentException($"The argument \"{pathToCsproj}\"{Environment.NewLine}is not a path to a Visual Studio project file!");
+                throw new OperationFailedException($"File {cmdArgs.FilePath} not found.");
             }
 
-            if(!File.Exists(pathToCsproj))
-            {
-                throw new OperationFailedException($"File {pathToCsproj} not found.");
-            }
-
-            this.CsprojFileName = Path.GetFileName(pathToCsproj);
+            this.CsprojFileName = Path.GetFileName(cmdArgs.FilePath);
 
             XName FileVersion = "FileVersion";
 
@@ -48,7 +33,7 @@ namespace IncVersion
 
             try
             {
-                csproj = System.Xml.Linq.XElement.Load(pathToCsproj);
+                csproj = System.Xml.Linq.XElement.Load(cmdArgs.FilePath);
             }
             catch(Exception e)
             {
@@ -99,7 +84,15 @@ namespace IncVersion
                     string?[] parts = fileVersion.Value.Split('-', 2, StringSplitOptions.None);
 
                     this.OldVersion = new Version(parts[0]!);
-                    this.NewVersion = new Version(OldVersion.Major, OldVersion.Minor, OldVersion.Build + 1, Math.Max(0, OldVersion.Revision));
+
+                    if (cmdArgs.IncrementRevision)
+                    {
+                        this.NewVersion = new Version(OldVersion.Major, OldVersion.Minor, Math.Max(0, OldVersion.Build), OldVersion.Revision + 1);
+                    }
+                    else
+                    {
+                        this.NewVersion = new Version(OldVersion.Major, OldVersion.Minor, OldVersion.Build + 1, Math.Max(0, OldVersion.Revision));
+                    }
 
                     if (parts.Length == 2)
                     {
@@ -118,7 +111,7 @@ namespace IncVersion
 
             try
             {
-                File.WriteAllText(pathToCsproj, csproj.ToString());
+                File.WriteAllText(cmdArgs.FilePath, csproj.ToString());
             }
             catch(Exception e)
             {

@@ -20,9 +20,7 @@ namespace IncVersion.Tests
 
             var incrementer = new AssemblyFileVersionIncrementer();
 
-          
-
-            incrementer.IncrementAssemblyFileVersion(fileName);
+            incrementer.IncrementAssemblyFileVersion(new CommandLineArgs(new string[] { fileName }));
 
         }
     }
